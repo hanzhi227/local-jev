@@ -1,0 +1,17 @@
+{
+  "model": "jev-latest",
+  "state": "I cannot connect Stripe: every attempt returns a 403 error.",
+  "questions": {
+    "department": {
+      "type": "choice",
+      "instructions": "Which team should handle this?",
+      "criteria": {"billing": "Payment issues", "technical": "Bugs", "sales": "Pricing"}
+    },
+    "urgency": {
+      "type": "score",
+      "instructions": "How urgent is this?",
+      "criteria": ["Not urgent", "Important", "Blocking"]
+    },
+    "needs_engineer": {"type": "noul", "instructions": "This requires an engineer."}
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "title": "A repeatable local inference benchmark",
+    "text": "I measured a 4B model on my laptop with 100 fixed prompts, five warm-up runs, and identical quantization. The scripts, prompt set, hardware details, p50 and p95 timings are attached so you can reproduce the comparison."
+  },
+  {
+    "title": "The secret nobody tells you",
+    "text": "AI is changing EVERYTHING. Most people will be left behind. Comment FUTURE and follow me to unlock my exclusive course before the price doubles."
+  },
+  {
+    "title": "Weekend bread",
+    "text": "This sourdough loaf uses 75 percent hydration and an overnight cold proof. Here are the ingredient weights and the baking schedule."
+  },
+  {
+    "title": "Fitting models into less memory",
+    "text": "For local inference, compare 4-bit and 8-bit weights on your own labeled examples. Record peak loading memory separately from steady-state memory; a model that fits after loading can still fail during initialization."
+  }
+]

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jev-local"
+version = "0.1.0"
+description = "Run JEV-compatible decision models on local hardware"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+mlx = ["semif-phase1[mlx] @ git+https://github.com/TheoLeeCJ/SemIf.git@1f2dea3e25379f9dfc98cb83c324f00ab5deda37"]
+llamacpp = ["semif-phase1[llamacpp] @ git+https://github.com/TheoLeeCJ/SemIf.git@1f2dea3e25379f9dfc98cb83c324f00ab5deda37"]
+
+[project.scripts]
+jev = "jev_local.server:main"
+jev-examples = "jev_local.examples.cli:main"
+jev-bench = "jev_local.benchmarks.runner:main"
+
+[tool.setuptools.packages.find]
+include = ["jev_local*"]
+
+[tool.setuptools.package-data]
+"jev_local.benchmarks" = ["data/*.jsonl", "data/*.json", "data/LICENSE"]

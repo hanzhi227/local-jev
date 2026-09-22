@@ -1,0 +1,6 @@
+include examples/*.json examples/*.md
+include scripts/*.sh scripts/serve_jev.py
+include deploy/*.sh
+include tests/*.py
+include docs/*.md benchmarks/*.md
+recursive-include jev_local/benchmarks/data *.jsonl *.json LICENSE
