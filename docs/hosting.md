@@ -14,8 +14,9 @@ bash scripts/setup.sh
 
 The default is MLX with 8-bit quantization. Allow roughly 9 GB of free memory
 during loading and 4.5 GB while running. `--mlx-bits 4` lowers steady memory
-to roughly 2.4 GB but still needs the loading headroom. These are approximate
-observations for the default Qwen3.5-4B model, not enforced resource limits.
+to roughly 2.4 GB but still needs the loading headroom. These estimates come
+from observations of the default Qwen3.5-4B model. The server does not enforce
+memory limits.
 
 To run at login:
 
@@ -79,7 +80,7 @@ sudo systemctl enable --now jev
 sudo journalctl -u jev -f
 ```
 
-The example unit is a template, not an automatic installer. Test the foreground
+Install and configure the example unit manually. Test the foreground
 command under the service user's environment before enabling it.
 
 ## Remote clients

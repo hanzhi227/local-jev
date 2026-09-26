@@ -46,8 +46,8 @@ jev-bench --suite public --limit 12 --repeat 3 --warmup 2 \
 `--limit` takes the first N cases in easy/original/hard order; it is not a
 representative sample. A repeat reruns the same cases in the same order and
 counts each attempt in metrics. Default warm-up is one excluded request.
-One question is sent per request, serially. This does **not** benchmark
-multi-question shared-prefix acceleration or concurrent throughput.
+The runner sends one question per request, serially. Multi-question shared-prefix
+acceleration and concurrent throughput need separate benchmarks.
 
 Each run creates a new directory (existing directories are refused):
 
@@ -58,32 +58,34 @@ Each run creates a new directory (existing directories are refused):
 - `summary.json`: aggregate results plus breakdowns by tier and question type.
 
 Gold labels, provenance rationales, and other metadata are never sent to the
-model. Only the case's state and question are sent. No silent truncation,
-retries, or fallback predictions occur. A failed warm-up aborts and records
+model. Only the case's state and question are sent. The runner rejects invalid
+inputs and records request failures without truncating inputs, retrying, or
+substituting predictions. A failed warm-up aborts and records
 `warmup_failed`. Measured request failures are recorded and the remaining cases
 continue; completed runs with failures exit 1. Successful runs exit 0 regardless
-of accuracy, so this is a measurement tool rather than a quality gate.
+of accuracy; the exit status reports request failures without imposing an
+accuracy threshold.
 An interrupted run keeps its flushed row log and `running` status; start a new
 output directory for the next run.
 
 ## Metric definitions
 
-- **Accuracy:** correct argmax decisions / all measured attempts. Failures count
+- Accuracy: correct argmax decisions / all measured attempts. Failures count
   as incorrect. Noul maps to no/yes; score uses the most probable discrete level,
   not a rounded expected score. Ties use declared option order (no before yes).
-- **Brier:** mean sum of squared differences between option probabilities and
-  the one-hot gold label, on successful attempts only. Range 0–2, including for
+- Brier: mean sum of squared differences between option probabilities and
+  the one-hot gold label, on successful attempts only. Range 0 to 2, including for
   binary questions. Lower is better; this is not a gold-distribution metric.
-- **ECE:** ten equal-width confidence bins, weighted absolute gap between
+- ECE: ten equal-width confidence bins, weighted absolute gap between
   accuracy and maximum option probability, on successful attempts only.
   Small samples are noisy; a smoke run cannot establish calibration.
-- **Score MAE:** mean absolute difference between the returned expected score
+- Score MAE: mean absolute difference between the returned expected score
   and the gold level, on successful score questions only.
-- **p50/p95:** nearest-rank percentiles of client-observed HTTP request duration,
+- p50/p95: nearest-rank percentiles of client-observed HTTP request duration,
   including failed attempts. Excludes model startup, warm-up, file writes, and
   local metric computation. A fast error can lower these latency numbers; always
   read failure counts alongside them.
-- **Throughput:** successful decisions / elapsed measured loop time, including
+- Throughput: successful decisions / elapsed measured loop time, including
   client validation, metrics, and artifact writes. It is serial end-to-end throughput.
 
 Absent metrics are `null`, never zero. Probabilities must be finite, normalized,
@@ -94,7 +96,7 @@ Some hard cases may exceed the server's context limit and remain explicit errors
 For comparisons, hold dataset hashes, question ordering, limits, repetition,
 warm-up, hardware, quantization, server mode, and network path constant. Use
 `--label` to record server details: the automatically recorded platform belongs
-to the **client**, which might be a different machine. Keys are not recorded.
+to the client, which might be a different machine. Keys are not recorded.
 
 ## Custom JSONL
 

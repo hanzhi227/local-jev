@@ -1,16 +1,16 @@
 # JEV local
 
-Host a JEV-compatible decision server on your own machine using
-[SemIf](https://github.com/TheoLeeCJ/SemIf) and Qwen3.5-4B. Send text or structured
-data with questions over HTTP and get typed answers with probabilities.
-The repo includes runnable examples and a benchmark suite.
+JEV local runs a JEV-compatible decision server on your machine using
+[SemIf](https://github.com/TheoLeeCJ/SemIf) and Qwen3.5-4B. Send questions about
+text or structured data over HTTP to get typed answers with probabilities.
+This repo includes examples you can run and a benchmark suite.
 
 This is an independent implementation. It uses a different model from TypeSafe's
 hosted Jev, so its speed, accuracy, and calibration will differ.
 
 ## Install
 
-Install Git and [uv](https://docs.astral.sh/uv/), then run from the checkout:
+Install Git and [uv](https://docs.astral.sh/uv/), then run these commands from the checkout:
 
 ```sh
 bash scripts/setup.sh
@@ -159,8 +159,8 @@ remote clients, and operating limits.
 | `tests/` | Unit and HTTP integration tests |
 
 Git ignores local weights in `models/`, outputs in `private/`, and old experiments
-in `archive/`. Installation does not need the archive or a local `third_party/`
-checkout.
+in `archive/`. You can install the project without the archive or a local
+`third_party/` checkout.
 
 Tests use the standard library and do not load model weights:
 
